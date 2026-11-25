@@ -11,15 +11,16 @@
 :root{
   /* One world: a burger bar after dark. The page colour matches the photos so they blend in.
      Phone: hero photo, headline, then burger photo, picker and builder stacked. Wide: headline over the dark side of the hero; photo left, builder right. */
-  --char:#150c07;
-  --coal:#21160f;
-  --ember:#302119;
-  --bone:#f6ecdd;
-  --ash:#c2b1a0;
+  --char:#111214;
+  --coal:#1a1c20;
+  --ember:#25282e;
+  --bone:#f4f1ea;
+  --ash:#a8acb4;
   --mustard:#e9a53a;
   --ketchup:#ec5a41;
   --pickle:#9bcb58;
-  --line:rgba(246,236,221,.14);
+  --line:rgba(255,255,255,.10);
+  --glass:rgba(30,32,37,.82);
   --display:"Fraunces",Georgia,"Times New Roman",serif;
   --body:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   color-scheme:dark;
@@ -37,7 +38,7 @@ h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.1;text-wrap:ba
 
 
 .top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding-top:12px;padding-bottom:12px}
-.top{position:sticky;top:0;z-index:15;background:rgba(21,12,7,.9);box-shadow:0 0 0 100vmax rgba(21,12,7,.9);clip-path:inset(0 -100vmax);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.top{position:sticky;top:0;z-index:15;background:rgba(17,18,20,.86);box-shadow:0 0 0 100vmax rgba(17,18,20,.86);clip-path:inset(0 -100vmax);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 .brand{display:flex;align-items:center;gap:8px;color:var(--bone);text-decoration:none}
 .brand b{font-family:var(--display);font-weight:500;font-style:italic;font-size:25px;line-height:1;display:block;letter-spacing:-.01em}
 .brand small{display:block;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--mustard);margin-top:3px}
@@ -70,13 +71,13 @@ h1{font-size:clamp(34px,9.4vw,44px)}
 h1 em{font-style:italic;font-weight:500;color:var(--mustard)}
 .lede{color:var(--ash);max-width:46ch}
 
-.pop-photo{position:relative;margin:0 -16px;height:clamp(220px,64vw,300px);overflow:hidden;background:var(--char)}
+.pop-photo{position:relative;margin:0 -16px;height:clamp(190px,52vw,260px);border-radius:0;overflow:hidden;background:var(--char)}
 .pop-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 52%}
-.pop-photo::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,var(--coal) 0,transparent 14%,transparent 70%,var(--coal) 100%)}
+.pop-photo img{-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 16%,#000 70%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 16%,#000 70%,transparent 100%)}
 .pop-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .pop-head .b-desc{color:var(--ash);font-size:15px}
 .pop-head .price{font-size:20px;color:var(--mustard)}
-.sheet-foot{display:flex;gap:10px;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:var(--coal);border-radius:0 0 22px 22px}
+.sheet-foot{display:flex;gap:10px;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:rgba(20,22,25,.7)}
 .sheet-foot .cta{min-height:50px}
 fieldset{border:0;margin:0;padding:0;min-width:0}
 legend{padding:0;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);margin-bottom:8px}
@@ -122,8 +123,12 @@ legend small{text-transform:none;letter-spacing:0;font-weight:500;font-size:12px
 footer{border-top:1px solid var(--line);padding:18px 16px 26px;color:var(--ash);font-size:13px;text-align:center}
 
 
-.scrim{position:fixed;inset:0;background:rgba(8,5,4,.7);z-index:30}
-.sheet{position:fixed;left:0;right:0;bottom:0;z-index:31;max-height:92%;background:var(--coal);border-radius:22px 22px 0 0;border:1px solid var(--line);border-bottom:0;display:flex;flex-direction:column}
+.scrim{position:fixed;inset:0;background:rgba(5,6,8,.55);-webkit-backdrop-filter:blur(6px) saturate(.8);backdrop-filter:blur(6px) saturate(.8);z-index:30}
+.sheet{position:fixed;z-index:31;top:50%;right:14px;left:auto;bottom:auto;width:min(440px,calc(100% - 28px));height:min(84dvh,780px);display:flex;flex-direction:column;overflow:hidden;
+  background:radial-gradient(120% 60% at 0% 0%,rgba(233,165,58,.13),transparent 55%),radial-gradient(90% 50% at 100% 100%,rgba(236,90,65,.08),transparent 60%),var(--glass);
+  -webkit-backdrop-filter:blur(22px) saturate(1.2);backdrop-filter:blur(22px) saturate(1.2);
+  border:1px solid rgba(255,255,255,.09);border-radius:26px;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 1px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.06)}
+.sheet::before{content:"";position:absolute;left:22px;right:22px;top:0;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--mustard),var(--ketchup),transparent);opacity:.85;pointer-events:none}
 .sheet-head{display:flex;align-items:center;gap:8px;padding:14px 14px 10px}
 .sheet-head h2{flex:1;font-size:20px}
 .icon{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:none;font-size:18px;line-height:1;flex:none}
@@ -196,7 +201,7 @@ footer a{color:var(--ash)}
 .ticket .ilist>li{display:flex;gap:10px;align-items:flex-start}
 .ticket .ilist b{display:block;font-size:14px;padding-top:2px}
 .ticket .ilist small{display:block;font-size:13px;color:#6b5a4c}
-.ticket .ico{background:#2a1d14}
+.ticket .ico{background:#1f2125}
 .admin{max-width:920px;margin:0 auto;padding:6px 16px 48px}
 .admin-head{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin:6px 0 4px}
 .admin-head h1{font-size:30px}
@@ -251,20 +256,15 @@ footer a{color:var(--ash)}
 .admin-login{max-width:380px;margin:30px auto}
 @media (min-width:760px){.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}}
 
-@media (max-width:759px){
-  .sheet{top:0;height:100%;height:100dvh;max-height:none;border-radius:0;border:0;padding-top:env(safe-area-inset-top,0px)}
-  .sheet-foot{border-radius:0}
-}
 body.locked{position:fixed;left:0;right:0;overflow:hidden}
 @media (min-width:760px){
   .banner{min-height:clamp(400px,46vw,600px);display:flex;align-items:center;max-width:1500px;margin:0 auto}
   .banner-img{position:absolute;inset:0}
   .banner-img img{height:100%;object-fit:cover;object-position:right center}
-  .banner-img::after{background:linear-gradient(to right,var(--char) 0,rgba(21,12,7,.72) 26%,transparent 54%),linear-gradient(to top,var(--char) 0,transparent 20%),linear-gradient(to bottom,var(--char) 0,transparent 10%),linear-gradient(to left,var(--char) 0,transparent 5%)}
+  .banner-img::after{background:linear-gradient(to right,var(--char) 0,rgba(17,18,20,.72) 26%,transparent 54%),linear-gradient(to top,var(--char) 0,transparent 20%),linear-gradient(to bottom,var(--char) 0,transparent 10%),linear-gradient(to left,var(--char) 0,transparent 5%)}
   .banner-copy{margin-top:0;width:100%;padding-top:44px;padding-bottom:44px}
   .banner-copy>*{max-width:min(46%,470px)}
   h1{font-size:clamp(36px,4.6vw,58px)}
-  .sheet{left:auto;right:20px;top:20px;bottom:20px;width:430px;max-height:none;border-radius:22px;border-bottom:1px solid var(--line)}
     .info{grid-template-columns:1fr 1fr}
 }
 @media (min-width:920px){
@@ -274,16 +274,12 @@ body.locked{position:fixed;left:0;right:0;overflow:hidden}
 :root{--ease-out:cubic-bezier(.22,1,.36,1);--ease-spring:cubic-bezier(.34,1.56,.64,1)}
 .scrim{opacity:0;transition:opacity .32s ease}
 .scrim.show{opacity:1}
-.sheet{transform:translate3d(0,100%,0);transition:transform .42s var(--ease-out);will-change:transform;touch-action:pan-y}
-.sheet.show{transform:none}
+.sheet{transform:translate3d(calc(100% + 40px),-50%,0) scale(.96);opacity:.4;transition:transform .5s var(--ease-out),opacity .35s ease;will-change:transform;touch-action:pan-y}
+.sheet.show{transform:translate3d(0,-50%,0);opacity:1}
 .sheet.dragging{transition:none}
 .grab{display:none}
-@media (max-width:759px){
-  .grab{display:block;width:42px;height:5px;border-radius:3px;background:rgba(246,236,221,.28);margin:8px auto -4px;flex:none}
-}
-@media (min-width:760px){
-  .sheet{transform:translate3d(calc(100% + 40px),0,0)}
-  .sheet.show{transform:none}
+@media (hover:none){
+  .grab{display:block;position:absolute;left:7px;top:50%;width:4px;height:46px;margin-top:-23px;border-radius:3px;background:rgba(255,255,255,.22);z-index:2;pointer-events:none}
 }
 .sheet-body.enter>*{animation:fadeUp .38s var(--ease-out) both}
 .sheet-body.enter>*:nth-child(2){animation-delay:.03s}
@@ -1119,37 +1115,35 @@ $('#sheetClose').addEventListener('click', closeSheet);
 $('#scrim').addEventListener('click', closeSheet);
 $('#sheetBack').addEventListener('click', function(){ state.view = this.dataset.to || 'cart'; state.formErr = null; renderSheet(true); });
 document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && sheetOpen) closeSheet(); });
-/* Pull the popup down to close it (phones). Drag from the top bar anywhere, or from the content when it is scrolled to the top. */
+/* Swipe the side panel to the right to close it (touch screens). Vertical swipes still scroll the content. */
 (function(){
-  var sh = $('#sheet'), sc = $('#scrim'), sb = $('#sheetBody'), drag = null;
+  var sh = $('#sheet'), sc = $('#scrim'), drag = null;
   sh.addEventListener('touchstart', function(e){
-    if (window.innerWidth >= 760 || e.touches.length !== 1 || !sheetOpen) return;
-    var inHead = !!e.target.closest('.sheet-head,.grab'), inBody = sb.contains(e.target);
-    if (!inHead && !(inBody && sb.scrollTop <= 0)) return;
-    drag = { y0: e.touches[0].clientY, y: e.touches[0].clientY, t: Date.now(), v: 0, dy: 0, active: false, head: inHead };
+    if (e.touches.length !== 1 || !sheetOpen) return;
+    if (e.target.closest('input[type=range]')) return;
+    drag = { x0: e.touches[0].clientX, y0: e.touches[0].clientY, x: e.touches[0].clientX, t: Date.now(), v: 0, dx: 0, active: false };
   }, { passive: true });
   sh.addEventListener('touchmove', function(e){
     if (!drag) return;
-    var y = e.touches[0].clientY, dy = y - drag.y0;
+    var x = e.touches[0].clientX, dx = x - drag.x0, dy = e.touches[0].clientY - drag.y0;
     if (!drag.active) {
-      if (dy > 6) {
-        if (!drag.head && sb.scrollTop > 0) { drag = null; return; }
-        drag.active = true; sh.classList.add('dragging');
-      } else if (dy < -6) { drag = null; return; }
-      else return;
+      if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+      if (dx > 0 && Math.abs(dx) > Math.abs(dy) * 1.3) { drag.active = true; sh.classList.add('dragging'); }
+      else { drag = null; return; }
     }
     if (e.cancelable) e.preventDefault();
-    var now = Date.now(); drag.v = (y - drag.y) / Math.max(1, now - drag.t); drag.y = y; drag.t = now;
-    drag.dy = Math.max(0, dy - 6);
-    sh.style.transform = 'translate3d(0,' + drag.dy + 'px,0)';
-    sc.style.opacity = String(Math.max(0, 1 - drag.dy / (sh.offsetHeight * 0.85)));
+    var now = Date.now(); drag.v = (x - drag.x) / Math.max(1, now - drag.t); drag.x = x; drag.t = now;
+    drag.dx = Math.max(0, dx - 10);
+    var k = drag.dx / sh.offsetWidth;
+    sh.style.transform = 'translate3d(' + drag.dx + 'px,-50%,0) rotate(' + (k * 3) + 'deg)';
+    sc.style.opacity = String(Math.max(0, 1 - k * 1.1));
   }, { passive: false });
   function end(){
     if (!drag) return;
     var d = drag; drag = null;
     if (!d.active) return;
     sh.classList.remove('dragging');
-    if (d.dy > Math.min(160, sh.offsetHeight * 0.22) || (d.v > 0.45 && d.dy > 24)) closeSheet();
+    if (d.dx > sh.offsetWidth * 0.3 || (d.v > 0.45 && d.dx > 24)) closeSheet();
     else { sh.style.transform = ''; sc.style.opacity = ''; }
   }
   sh.addEventListener('touchend', end);
