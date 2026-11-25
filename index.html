@@ -104,7 +104,6 @@ legend small{text-transform:none;letter-spacing:0;font-weight:500;font-size:12px
 .cat h3{font-family:var(--body);font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mustard);padding-bottom:10px;border-bottom:1px solid var(--line)}
 .rows{list-style:none;margin:0;padding:0}
 .row{width:100%;display:flex;gap:14px;justify-content:space-between;align-items:center;padding:14px 0;background:none;border:0;border-bottom:1px solid var(--line);text-align:left;color:inherit}
-@media (hover:hover) and (pointer:fine){.row:hover .plus{background:var(--mustard);color:#1f1300}}
 .menu-hint{color:var(--ash);font-size:15px}
 .row-main{min-width:0;flex:1}
 .thumb{width:72px;height:72px;border-radius:10px;object-fit:cover;flex:none;background:var(--coal)}
@@ -314,6 +313,68 @@ body.locked{position:fixed;left:0;right:0;overflow:hidden}
 @keyframes cartPop{40%{transform:scale(1.12)}}
 .flyer{position:fixed;z-index:45;border-radius:50%;object-fit:cover;pointer-events:none;box-shadow:0 10px 30px rgba(0,0,0,.5)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important}.reveal .rows>li{opacity:1;transform:none}}
+/* Menu "Bestill" button */
+.row-side{flex-direction:column;align-items:flex-end;gap:8px}
+.order-btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 13px 0 16px;border-radius:999px;background:linear-gradient(135deg,#f4bb52,#e8902f);color:#1f1300;font-weight:800;font-size:14px;letter-spacing:.01em;box-shadow:0 6px 18px rgba(233,165,58,.22),inset 0 1px 0 rgba(255,255,255,.4);transition:transform .28s var(--ease-spring),box-shadow .25s ease;white-space:nowrap}
+.order-btn svg{width:16px;height:16px;flex:none;transition:transform .3s var(--ease-spring)}
+.order-btn::after{content:"";position:absolute;top:0;bottom:0;left:-70%;width:45%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent);transform:skewX(-20deg);animation:shine 5s ease-in-out infinite;pointer-events:none}
+.rows>li:nth-child(2) .order-btn::after{animation-delay:.5s}
+.rows>li:nth-child(3) .order-btn::after{animation-delay:1s}
+.rows>li:nth-child(4) .order-btn::after{animation-delay:1.5s}
+.rows>li:nth-child(5) .order-btn::after{animation-delay:2s}
+.rows>li:nth-child(6) .order-btn::after{animation-delay:2.5s}
+@keyframes shine{0%,72%{left:-70%}100%{left:140%}}
+.row:active .order-btn{transform:scale(.9)}
+.thumb{transition:transform .4s var(--ease-spring)}
+@media (hover:hover) and (pointer:fine){
+  .row:hover .order-btn{transform:translateY(-2px);box-shadow:0 12px 26px rgba(233,165,58,.36),inset 0 1px 0 rgba(255,255,255,.4)}
+  .row:hover .order-btn svg{transform:translateX(3px)}
+  .row:hover .thumb{transform:scale(1.06) rotate(-3deg)}
+}
+/* Cart */
+.cart-hero{position:relative;display:flex;align-items:center;gap:14px;padding:16px;border-radius:22px;background:radial-gradient(90% 140% at 15% 50%,rgba(233,165,58,.24),transparent 70%),rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);min-height:124px;flex:none}
+.stack{position:relative;width:118px;height:92px;flex:none}
+.stack img{position:absolute;top:6px;left:calc(var(--k) * 22px);width:80px;height:80px;border-radius:50%;object-fit:cover;box-shadow:0 10px 22px rgba(0,0,0,.55),0 0 0 3px #1e2024;rotate:calc((var(--k) - 1) * 9deg);animation:floaty 4s ease-in-out infinite;animation-delay:calc(var(--k) * -1.3s)}
+.stack.s1 img{left:14px;top:0;width:92px;height:92px;rotate:-6deg}
+.stack.s2 img{left:calc(var(--k) * 32px + 3px);rotate:calc((var(--k) * 16deg) - 8deg)}
+@keyframes floaty{0%,100%{translate:0 0}50%{translate:0 -5px}}
+.ch-text{display:grid;gap:3px;min-width:0}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--mustard)}
+.ch-text b{font-family:var(--display);font-weight:600;font-size:26px;line-height:1.05}
+.ch-sub{font-size:13px;color:var(--ash);display:flex;align-items:center;gap:6px}
+.ch-sub i{width:7px;height:7px;border-radius:50%;background:var(--pickle);box-shadow:0 0 0 0 rgba(155,203,88,.6);animation:pulse 2s infinite;flex:none}
+.ch-sub.closed i{background:var(--ketchup);animation:none}
+@keyframes pulse{70%{box-shadow:0 0 0 7px rgba(155,203,88,0)}100%{box-shadow:0 0 0 0 rgba(155,203,88,0)}}
+.cart-lines{display:grid;gap:10px}
+.cline{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:18px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);max-height:640px;transition:opacity .26s ease,transform .32s var(--ease-out),max-height .32s ease,padding .32s ease,margin .32s ease,border-width .32s ease}
+.cline.leaving{opacity:0;transform:translateX(50px) scale(.95);max-height:0!important;padding-top:0;padding-bottom:0;margin-top:-10px;border-width:0}
+.cthumb{width:64px;height:64px;border-radius:16px;object-fit:cover;flex:none;box-shadow:0 6px 16px rgba(0,0,0,.45)}
+.cline>.ico{width:64px;height:64px;border-radius:16px}
+.cline>.ico svg{width:32px;height:32px}
+.cl-head{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.cl-head h4{font-size:16px;font-weight:700;line-height:1.25}
+.cline .note{font-size:13px;color:var(--ash)}
+.achips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.achip{display:inline-flex;align-items:center;gap:6px;padding:3px 10px 3px 3px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.05);font-size:13px;font-weight:600}
+.achip em{font-style:normal;color:var(--ash);font-weight:500;font-variant-numeric:tabular-nums}
+.ico.xs{width:24px;height:24px;border-radius:50%}
+.ico.xs svg{width:15px;height:15px}
+.cline .line-actions{margin-top:10px}
+.cline .stepper{background:rgba(0,0,0,.2)}
+.cline .stepper button{width:36px;height:36px;font-size:19px}
+.flash{animation:flash .55s var(--ease-spring)}
+@keyframes flash{0%{color:var(--mustard);transform:scale(1.15)}100%{transform:none}}
+.price.flash,output.flash{display:inline-block}
+.cart-total{display:grid;line-height:1.1;flex:none;padding-right:4px}
+.cart-total small{font-size:12px;color:var(--ash);font-weight:600}
+.cart-total b{font-size:22px}
+.cta .arr{display:inline-block;margin-left:6px;transition:transform .3s var(--ease-spring)}
+.cta:hover:not([disabled]) .arr{transform:translateX(4px)}
+.empty{display:grid;justify-items:center;text-align:center;gap:10px;padding:46px 10px 20px}
+.empty .ico{width:104px;height:104px;border-radius:32px;background:radial-gradient(circle at 50% 40%,rgba(233,165,58,.25),rgba(255,255,255,.04));animation:floaty 3s ease-in-out infinite}
+.empty .ico svg{width:58px;height:58px}
+.empty h3{font-size:24px}
+.empty .cta{flex:none;padding:0 26px;margin-top:6px}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
@@ -517,6 +578,7 @@ var T = {
     a_period:'Periode', a_today:'I dag', a_7:'Siste 7 dager', a_month:'Denne måneden', a_all:'Alt', a_rev:'Omsetning', a_orders:'Bestillinger', a_avg:'Snitt per bestilling', a_chart:'Omsetning per dag, siste 14 dager', a_max:'Høyeste dag', a_noOrders14:'Ingen bestillinger de siste 14 dagene.', a_ordersN:'bestillinger', a_pcs:'stk', a_top:'Mest solgt', a_recent:'Siste bestillinger', a_noOrders:'Ingen bestillinger i denne perioden.', a_demo:'Legg inn testbestillinger', a_demoDone:'Testbestillinger lagt inn', a_clear:'Slett alle bestillinger', a_confirm:'Trykk igjen for å slette alt',
     a_ordering:'Nettbestilling', a_pause:'Sett nettbestilling på pause', a_pauseHint:'Kundene ser menyen, men kan ikke bestille før du slår pausen av.', a_prep:'Tid fra bestilling til første hentetid', a_pinT:'PIN-kode for admin', a_newPin:'Ny PIN-kode (4–8 siffer)', a_save:'Lagre', a_pinBad:'PIN-koden må være 4–8 siffer.', a_pinSaved:'PIN-koden er endret',
     a_note:'Testversjon: innstillinger og bestillinger lagres bare i denne nettleseren. For at åpningstidene skal gjelde for alle kunder, og for å se alle bestillinger her, må siden kobles til en database.',
+    orderBtn:'Bestill', yourOrder:'Din bestilling', burger1:'burger', burgerN:'burgere', readyAbout:'Klar til henting ca.', emptyTitle:'Kurven er tom', emptyText:'Velg en burger fra menyen, så dukker den opp her.', emptyCta:'Se menyen',
     accountTitle:'Kontoen din', signedInAs:'Du er logget inn som', via:'via', guest:'gjest', signOut:'Logg ut', back:'Tilbake', close:'Lukk'
   },
   en:{
@@ -552,6 +614,7 @@ var T = {
     a_period:'Period', a_today:'Today', a_7:'Last 7 days', a_month:'This month', a_all:'All', a_rev:'Revenue', a_orders:'Orders', a_avg:'Average order', a_chart:'Revenue per day, last 14 days', a_max:'Best day', a_noOrders14:'No orders in the last 14 days.', a_ordersN:'orders', a_pcs:'sold', a_top:'Best sellers', a_recent:'Latest orders', a_noOrders:'No orders in this period.', a_demo:'Add test orders', a_demoDone:'Test orders added', a_clear:'Delete all orders', a_confirm:'Tap again to delete everything',
     a_ordering:'Online ordering', a_pause:'Pause online ordering', a_pauseHint:'Customers see the menu but cannot order until you turn the pause off.', a_prep:'Time from order to first pickup', a_pinT:'Admin PIN code', a_newPin:'New PIN code (4–8 digits)', a_save:'Save', a_pinBad:'The PIN code must be 4–8 digits.', a_pinSaved:'PIN code changed',
     a_note:'Test version: settings and orders are saved only in this browser. For the opening hours to apply to every customer, and to see all orders here, the site has to be connected to a database.',
+    orderBtn:'Order', yourOrder:'Your order', burger1:'burger', burgerN:'burgers', readyAbout:'Ready for pickup around', emptyTitle:'Your cart is empty', emptyText:'Pick a burger from the menu and it shows up here.', emptyCta:'See the menu',
     accountTitle:'Your account', signedInAs:'You are signed in as', via:'via', guest:'guest', signOut:'Sign out', back:'Back', close:'Close'
   }
 };
@@ -837,7 +900,7 @@ function renderMenu(){
     var b = BURGERS[id];
     return '<li><button type="button" class="row" data-open="' + id + '"><img class="thumb" src="img/t-' + id + '.jpg" width="72" height="72" alt="" loading="lazy">' +
       '<span class="row-main"><span class="rname">' + esc(b.name) + '</span><span class="rdesc">' + esc(describe(b.layers)) + '</span></span>' +
-      '<span class="row-side"><span class="price">' + kr(b.price) + '</span><span class="plus" aria-hidden="true">+</span></span></button></li>';
+      '<span class="row-side"><span class="price">' + kr(b.price) + '</span><span class="order-btn" aria-hidden="true">' + t('orderBtn') + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></span></button></li>';
   }).join('') + '</ul></div>';
   revealRows();
 }
@@ -1018,20 +1081,28 @@ function renderSheet(focus){
   var body = $('#sheetBody'), title = '', html = '', back = null, foot = '';
   if (state.view === 'cart') {
     title = t('cartTitle');
-    if (!state.cart.length) html = '<p class="muted">' + t('cartEmpty') + '</p>';
+    if (!state.cart.length) html = '<div class="empty">' + icon('burger') + '<h3>' + t('emptyTitle') + '</h3><p class="muted">' + t('emptyText') + '</p><button type="button" class="cta" data-act="toMenu">' + t('emptyCta') + '</button></div>';
     else {
-      var cw = orderWindow();
-      html = '<div>' + state.cart.map(function(l, i){
-        var note = lineNote(l);
-        return '<div class="line">' + icon(iconFor(l.id)) + '<div class="line-main"><h4>' + esc(lineName(l)) + '</h4>' +
-          (note ? '<p class="note">' + esc(note) + '</p>' : '') + addsList(l) +
-          (l.qty > 1 && addsOf(l).length ? '<p class="note">' + t('perBurger') + '</p>' : '') +
-          '<div class="line-actions"><div class="stepper" role="group" aria-label="' + t('qty') + '"><button type="button" data-line="' + i + '" data-d="-1" aria-label="' + t('fewer') + '">&minus;</button><output>' + l.qty + '</output><button type="button" data-line="' + i + '" data-d="1" aria-label="' + t('more') + '">+</button></div>' +
-          (BURGERS[l.id] ? '<button type="button" class="linkbtn" data-edit="' + i + '">' + t('editExtras') + '</button>' : '') + '</div></div>' +
-          '<span class="price">' + kr(lineUnit(l) * l.qty) + '</span></div>';
-      }).join('') + '</div><p class="sum"><span>' + t('total') + '</span><span class="price">' + kr(cartTotal()) + '</span></p>' +
-      (cw.ok ? '' : '<p class="closedbox">' + esc(closedMsg(cw)) + '</p>') +
-      '<button type="button" class="cta wide" data-act="checkout"' + (cw.ok ? '' : ' disabled') + '>' + t('checkout') + '</button>';
+      var cw = orderWindow(), flash = state.flash; state.flash = null;
+      var ids = [], nB = 0;
+      state.cart.forEach(function(l){ if (BURGERS[l.id]) { nB += l.qty; if (ids.indexOf(l.id) < 0) ids.push(l.id); } });
+      ids = ids.slice(0, 3);
+      var sub = cw.ok ? '<span class="ch-sub"><i></i>' + t('readyAbout') + ' ' + hhmm(cw.slots[0]) + '</span>' : '<span class="ch-sub closed"><i></i>' + esc(statusText(cw)) + '</span>';
+      html = '<div class="cart-hero">' + (ids.length ? '<div class="stack s' + ids.length + '">' + ids.map(function(id, k){ return '<img src="img/t-' + id + '.jpg" alt="" style="--k:' + k + '">'; }).join('') + '</div>' : '') +
+        '<div class="ch-text"><span class="eyebrow">' + t('yourOrder') + '</span><b>' + (nB ? nB + ' ' + (nB === 1 ? t('burger1') : t('burgerN')) : cartCount() + ' ' + (cartCount() === 1 ? t('item1') : t('itemN'))) + '</b>' + sub + '</div></div>' +
+        '<div class="cart-lines">' + state.cart.map(function(l, i){
+          var note = lineNote(l), adds = addsOf(l);
+          return '<div class="cline">' + (BURGERS[l.id] ? '<img class="cthumb" src="img/t-' + l.id + '.jpg" alt="">' : icon(iconFor(l.id))) +
+            '<div class="line-main"><div class="cl-head"><h4>' + esc(lineName(l)) + '</h4><span class="price' + (flash === i ? ' flash' : '') + '">' + kr(lineUnit(l) * l.qty) + '</span></div>' +
+            (note ? '<p class="note">' + esc(note) + '</p>' : '') +
+            (adds.length ? '<div class="achips">' + adds.map(function(x){ var it = OTHER_BY_ID[x]; return '<span class="achip">' + icon(iconFor(x), 'xs') + '<span>' + esc(lab(it)) + '</span><em>+' + krn(it.price) + '</em></span>'; }).join('') + '</div>' : '') +
+            (l.qty > 1 && adds.length ? '<p class="note" style="margin-top:4px">' + t('perBurger') + '</p>' : '') +
+            '<div class="line-actions"><div class="stepper" role="group" aria-label="' + t('qty') + '"><button type="button" data-line="' + i + '" data-d="-1" aria-label="' + t('fewer') + '">&minus;</button><output' + (flash === i ? ' class="flash"' : '') + '>' + l.qty + '</output><button type="button" data-line="' + i + '" data-d="1" aria-label="' + t('more') + '">+</button></div>' +
+            (BURGERS[l.id] ? '<button type="button" class="linkbtn" data-edit="' + i + '">' + t('editExtras') + '</button>' : '') + '</div></div></div>';
+        }).join('') + '</div>' +
+        (cw.ok ? '' : '<p class="closedbox">' + esc(closedMsg(cw)) + '</p>');
+      foot = '<div class="cart-total"><small>' + t('total') + '</small><b class="price' + (flash != null ? ' flash' : '') + '">' + kr(cartTotal()) + '</b></div>' +
+        '<button type="button" class="cta" data-act="checkout"' + (cw.ok ? '' : ' disabled') + '>' + t('checkout') + '<span class="arr" aria-hidden="true">→</span></button>';
     }
   } else if (state.view === 'burger') {
     var d = state.draft, b = BURGERS[d.id], L = layersFor(d.id, d.removed, d.extras);
@@ -1092,7 +1163,8 @@ function renderSheet(focus){
     html = '<p>' + t('signedInAs') + ' <b>' + esc(state.user.name) + '</b> ' + t('via') + ' ' + viaLabel(state.user.via) + '.</p>' +
       '<button type="button" class="provider" data-act="signout">' + t('signOut') + '</button>';
   }
-  $('#sheetTitle').textContent = title; body.innerHTML = html; body.scrollTop = 0;
+  var keepY = state.view === lastView ? body.scrollTop : 0;
+  $('#sheetTitle').textContent = title; body.innerHTML = html; body.scrollTop = keepY;
   if (state.view !== lastView) { body.classList.remove('enter'); void body.offsetWidth; body.classList.add('enter'); lastView = state.view; }
   var sf = $('#sheetFoot'); sf.innerHTML = foot; sf.hidden = !foot;
   var bb = $('#sheetBack'); bb.hidden = !back; bb.dataset.to = back || '';
@@ -1156,9 +1228,15 @@ $('#sheet').addEventListener('click', function(e){
   if (d && el.dataset.x) { d.extras[el.dataset.x] = !d.extras[el.dataset.x]; el.setAttribute('aria-pressed', String(!!d.extras[el.dataset.x])); refreshDraft(); return; }
   if (d && el.dataset.dq) { d.qty = Math.max(1, Math.min(20, d.qty + Number(el.dataset.dq))); refreshDraft(); return; }
   if (el.dataset.line) {
-    var l = state.cart[Number(el.dataset.line)]; if (!l) return;
-    l.qty += Number(el.dataset.d); if (l.qty <= 0) state.cart.splice(Number(el.dataset.line), 1);
-    saveCart(); renderSheet(false); return;
+    var idx = Number(el.dataset.line), cl = state.cart[idx], row = el.closest('.cline'); if (!cl || (row && row.classList.contains('leaving'))) return;
+    var nq = cl.qty + Number(el.dataset.d);
+    if (nq <= 0) {
+      var drop = function(){ state.cart.splice(idx, 1); saveCart(); state.flash = -1; renderSheet(false); };
+      if (row && !reduceMotion) { row.style.maxHeight = row.offsetHeight + 'px'; void row.offsetWidth; row.classList.add('leaving'); setTimeout(drop, 330); }
+      else drop();
+      return;
+    }
+    cl.qty = Math.min(20, nq); saveCart(); state.flash = idx; renderSheet(false); return;
   }
   if (el.dataset.edit) { editLine(Number(el.dataset.edit)); return; }
   var act = el.dataset.act; if (!act) return;
@@ -1183,6 +1261,7 @@ $('#sheet').addEventListener('click', function(e){
     }, 1600);
   }
   else if (act === 'close') closeSheet();
+  else if (act === 'toMenu') { closeSheet(); setTimeout(function(){ $('#menu').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' }); }, reduceMotion ? 0 : 440); }
   else if (act === 'saveBurger' && d) {
     var editing = d.edit != null;
     if (!editing) flyToCart($('.pop-photo img'));
