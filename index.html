@@ -384,6 +384,49 @@ body.locked{position:fixed;left:0;right:0;overflow:hidden}
   .row-side{grid-area:side;flex-direction:row;justify-content:space-between;align-items:center;width:100%}
   .row-side .price{font-size:17px}
 }
+/* Active orders and history */
+.ao{position:relative;display:grid;gap:12px;padding:16px;border-radius:22px;background:linear-gradient(140deg,rgba(155,203,88,.16),rgba(255,255,255,.03) 55%);border:1px solid rgba(155,203,88,.28);overflow:hidden}
+.ao.ready{background:linear-gradient(140deg,rgba(233,165,58,.28),rgba(255,255,255,.03) 60%);border-color:rgba(233,165,58,.5)}
+.ao-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.ao-no{font-family:var(--display);font-weight:600;font-size:34px;line-height:1}
+.ao-when{text-align:right;font-size:13px;color:var(--ash)}
+.ao-when b{display:block;font-size:22px;color:var(--bone);font-variant-numeric:tabular-nums}
+.ao-msg{font-weight:700;font-size:15px}
+.steps3{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding-top:4px}
+.steps3::before{content:"";position:absolute;left:16%;right:16%;top:13px;height:3px;border-radius:2px;background:rgba(255,255,255,.1)}
+.steps3 .bar{position:absolute;left:16%;top:13px;height:3px;border-radius:2px;background:var(--pickle);transition:width .8s var(--ease-out)}
+.st{position:relative;display:grid;justify-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--ash)}
+.st i{width:20px;height:20px;border-radius:50%;background:#2a2d33;border:2px solid rgba(255,255,255,.15);display:grid;place-items:center;transition:background .3s ease,border-color .3s ease}
+.st.done i{background:var(--pickle);border-color:var(--pickle)}
+.st.done i::after{content:"";width:6px;height:10px;border:solid #132000;border-width:0 2px 2px 0;transform:translateY(-1px) rotate(45deg)}
+.st.now{color:var(--bone)}
+.st.now i{background:var(--pickle);border-color:var(--pickle);box-shadow:0 0 0 0 rgba(155,203,88,.6);animation:pulse 1.8s infinite}
+.ao-items{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ash)}
+.mini{display:flex}
+.mini img,.mini .ico{width:34px;height:34px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px #1e2024;margin-left:-8px}
+.mini>:first-child{margin-left:0}
+.mini .ico svg{width:18px;height:18px}
+.ao-sep{display:flex;align-items:center;gap:10px;color:var(--ash);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-top:4px}
+.ao-sep::after{content:"";flex:1;height:1px;background:var(--line)}
+.acct-card{display:flex;align-items:center;gap:14px;padding:16px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)}
+.avatar{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-size:24px;font-weight:600;color:#1f1300;background:linear-gradient(135deg,#f4bb52,#e8902f);flex:none}
+.acct-card small{display:block;color:var(--ash);font-size:13px}
+.acct-card b{font-size:18px}
+.menu-item{width:100%;display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);font-weight:700;font-size:15px;text-align:left}
+.menu-item .ico{width:38px;height:38px}
+.menu-item span{flex:1}
+.menu-item em{font-style:normal;color:var(--ash);font-weight:600;font-size:13px}
+.menu-item .chev{color:var(--ash);font-size:20px}
+.hcard{display:grid;gap:10px;padding:14px;border-radius:18px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06)}
+.h-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.h-top b{font-size:16px}
+.h-top small{display:block;color:var(--ash);font-size:13px}
+.chipst{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:4px 9px;background:rgba(255,255,255,.08);color:var(--ash);white-space:nowrap}
+.chipst.live{background:rgba(155,203,88,.18);color:var(--pickle)}
+.h-items{font-size:13.5px;color:var(--ash);line-height:1.4}
+.h-foot{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.h-foot .btn{min-height:40px;padding:6px 14px;background:rgba(233,165,58,.14);border-color:rgba(233,165,58,.4);color:var(--mustard)}
+#cartBtn .live-dot{position:absolute;left:-4px;top:-4px;width:12px;height:12px;border-radius:50%;background:var(--pickle);box-shadow:0 0 0 2px var(--char);animation:pulse 1.8s infinite}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
@@ -588,6 +631,7 @@ var T = {
     a_ordering:'Nettbestilling', a_pause:'Sett nettbestilling på pause', a_pauseHint:'Kundene ser menyen, men kan ikke bestille før du slår pausen av.', a_prep:'Tid fra bestilling til første hentetid', a_pinT:'PIN-kode for admin', a_newPin:'Ny PIN-kode (4–8 siffer)', a_save:'Lagre', a_pinBad:'PIN-koden må være 4–8 siffer.', a_pinSaved:'PIN-koden er endret',
     a_note:'Testversjon: innstillinger og bestillinger lagres bare i denne nettleseren. For at åpningstidene skal gjelde for alle kunder, og for å se alle bestillinger her, må siden kobles til en database.',
     orderBtn:'Bestill', yourOrder:'Din bestilling', burger1:'burger', burgerN:'burgere', readyAbout:'Klar til henting ca.', emptyTitle:'Kurven er tom', emptyText:'Velg en burger fra menyen, så dukker den opp her.', emptyCta:'Se menyen',
+    activeOrder:'Aktiv bestilling', activeShort:'Aktiv', stReceived:'Mottatt', stCooking:'Lages', stReady:'Klar', stDone:'Fullført', msgReceived:'Vi har fått bestillingen din.', msgCooking:'Kjøkkenet lager maten din nå.', msgReady:'Maten er klar i luka!', orderMore:'Bestill mer', history:'Ordrehistorikk', noHistory:'Du har ingen bestillinger ennå.', reorder:'Bestill igjen', profile:'Profil', ordersWord:'bestillinger',
     accountTitle:'Kontoen din', signedInAs:'Du er logget inn som', via:'via', guest:'gjest', signOut:'Logg ut', back:'Tilbake', close:'Lukk'
   },
   en:{
@@ -624,6 +668,7 @@ var T = {
     a_ordering:'Online ordering', a_pause:'Pause online ordering', a_pauseHint:'Customers see the menu but cannot order until you turn the pause off.', a_prep:'Time from order to first pickup', a_pinT:'Admin PIN code', a_newPin:'New PIN code (4–8 digits)', a_save:'Save', a_pinBad:'The PIN code must be 4–8 digits.', a_pinSaved:'PIN code changed',
     a_note:'Test version: settings and orders are saved only in this browser. For the opening hours to apply to every customer, and to see all orders here, the site has to be connected to a database.',
     orderBtn:'Order', yourOrder:'Your order', burger1:'burger', burgerN:'burgers', readyAbout:'Ready for pickup around', emptyTitle:'Your cart is empty', emptyText:'Pick a burger from the menu and it shows up here.', emptyCta:'See the menu',
+    activeOrder:'Active order', activeShort:'Active', stReceived:'Received', stCooking:'Cooking', stReady:'Ready', stDone:'Completed', msgReceived:'We have your order.', msgCooking:'The kitchen is making your food now.', msgReady:'Your food is ready at the counter!', orderMore:'Order more', history:'Order history', noHistory:'You have no orders yet.', reorder:'Order again', profile:'Profile', ordersWord:'orders',
     accountTitle:'Your account', signedInAs:'You are signed in as', via:'via', guest:'guest', signOut:'Sign out', back:'Back', close:'Close'
   }
 };
@@ -662,6 +707,7 @@ var ICONS = {
   water:'<path d="M10 2.5h4v2.6l2 3.1v11.6a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V8.2l2-3.1z"/><path d="M8 12h8M8 16h8"/>',
   shake:'<path d="M7 10.5h10l-1.4 10.3H8.4z"/><path d="M5.8 10.5c0-3.6 2.8-5 6.2-5s6.2 1.4 6.2 5z"/><path d="M13.6 5.6l2.2-4"/>'
 };
+ICONS.history = '<circle cx="12" cy="12" r="8.6"/><path d="M12 7.4V12l3.1 2.1"/>';
 var ICON_OF = { fries:'fries', sweet:'fries', cheesefries:'cheesefries', rings:'rings', mozza:'sticks', nuggets:'nugget', poppers:'chili', slawside:'slaw', dAioli:'dip', dBbq:'dip', dChili:'dip', soda:'soda', water:'water', shake:'shake' };
 function iconFor(id){ return BURGERS[id] ? 'burger' : (ICON_OF[id] || 'dip'); }
 function icon(name, cls){
@@ -977,6 +1023,9 @@ function renderCartBits(){
   c.textContent = n; c.hidden = n === 0;
   if (n > 0 && String(n) !== was && !reduceMotion) { c.classList.remove('bump'); void c.offsetWidth; c.classList.add('bump'); }
   tot.textContent = n ? kr(cartTotal()) : ''; tot.hidden = !n;
+  var ld = $('#cartBtn .live-dot'), hasAct = activeOrders().length > 0;
+  if (hasAct && !ld) { ld = document.createElement('span'); ld.className = 'live-dot'; ld.setAttribute('aria-hidden', 'true'); $('#cartBtn').appendChild(ld); }
+  else if (!hasAct && ld) ld.remove();
   $('#cartBtn').setAttribute('aria-label', t('cart') + (n ? ': ' + n + ' ' + (n === 1 ? t('item1') : t('itemN')) + ', ' + kr(cartTotal()) : ''));
 }
 var toastTimer = 0;
@@ -1004,6 +1053,69 @@ function orderLinesHtml(lines){
     var note = lineNote({ rm: l.rm, ex: l.ex });
     return '<li>' + icon(iconFor(l.id), 'sm') + '<span><b>' + l.q + ' × ' + esc(nameOf(l.id)) + '</b>' + (note ? '<small>' + esc(note) + '</small>' : '') + (adds ? '<small>+ ' + esc(adds) + '</small>' : '') + '</span></li>';
   }).join('') + '</ul>';
+}
+
+/* ---------- The customer's own orders (active + history) ---------- */
+var myOrders = (function(){
+  var o = store.get('bulls.my', []);
+  return Array.isArray(o) ? o.filter(function(x){ return x && typeof x.ts === 'number' && typeof x.pickup === 'number' && Array.isArray(x.lines); }) : [];
+})();
+function saveMy(){ if (myOrders.length > 200) myOrders = myOrders.slice(-200); store.set('bulls.my', myOrders); }
+function userKey(u){ return u ? u.via + ':' + (u.phone || u.name) : ''; }
+function orderStage(o){
+  var now = Date.now();
+  if (now >= o.pickup + 30 * 60000) return 'done';
+  if (now >= o.pickup) return 'ready';
+  if (now >= o.pickup - 12 * 60000) return 'cooking';
+  return 'received';
+}
+function activeOrders(){
+  var k = userKey(state.user);
+  return myOrders.filter(function(o){ return orderStage(o) !== 'done' && (!state.user || !o.user || o.user === k); }).sort(function(a, b){ return a.pickup - b.pickup; });
+}
+function historyOrders(){
+  var k = userKey(state.user);
+  return myOrders.filter(function(o){ return !o.user || o.user === k; }).sort(function(a, b){ return b.ts - a.ts; });
+}
+function miniThumbs(lines){
+  var seen = [], out = '';
+  lines.forEach(function(l){ if (seen.indexOf(l.id) < 0) seen.push(l.id); });
+  seen.slice(0, 4).forEach(function(id){ out += BURGERS[id] ? '<img src="img/t-' + id + '.jpg" alt="">' : icon(iconFor(id)); });
+  return '<span class="mini">' + out + '</span>';
+}
+function itemCount(lines){ return lines.reduce(function(s, l){ return s + l.q; }, 0); }
+function activeCard(o){
+  var st = orderStage(o), idx = { received: 0, cooking: 1, ready: 2 }[st], n = itemCount(o.lines);
+  var msg = st === 'ready' ? t('msgReady') : st === 'cooking' ? t('msgCooking') : t('msgReceived');
+  return '<div class="ao' + (st === 'ready' ? ' ready' : '') + '"><div class="ao-top"><div><span class="eyebrow">' + t('activeOrder') + '</span><div class="ao-no">' + esc(o.no) + '</div></div>' +
+    '<div class="ao-when">' + t('pickupAt') + '<b>' + hhmm(new Date(o.pickup)) + '</b></div></div>' +
+    '<div class="steps3"><span class="bar" style="width:' + (idx * 34) + '%"></span>' +
+      [t('stReceived'), t('stCooking'), t('stReady')].map(function(lbl, k){ return '<div class="st' + (k < idx ? ' done' : k === idx ? ' now' : '') + '"><i></i>' + lbl + '</div>'; }).join('') + '</div>' +
+    '<p class="ao-msg">' + msg + '</p>' +
+    '<div class="ao-items">' + miniThumbs(o.lines) + '<span>' + n + ' ' + (n === 1 ? t('item1') : t('itemN')) + ' · ' + kr(o.total) + '</span></div></div>';
+}
+function historyCard(o){
+  var st = orderStage(o), d = new Date(o.ts);
+  var chip = st === 'done' ? '<span class="chipst">' + t('stDone') + '</span>' : '<span class="chipst live">' + (st === 'ready' ? t('stReady') : t('activeShort')) + '</span>';
+  var sum = o.lines.map(function(l){ return l.q + '× ' + nameOf(l.id); }).join(', ');
+  var adds = []; o.lines.forEach(function(l){ (l.adds || []).forEach(function(a){ if (OTHER_BY_ID[a] && adds.indexOf(a) < 0) adds.push(a); }); });
+  return '<div class="hcard"><div class="h-top"><div><b>' + esc(o.no) + '</b><small>' + dayDate(ymd(d)) + ' ' + hhmm(d) + ' · ' + (o.pay === 'card' ? t('payCard') : 'Vipps') + '</small></div>' + chip + '</div>' +
+    '<div class="ao-items">' + miniThumbs(o.lines) + '<span class="h-items">' + esc(sum) + (adds.length ? '<br>+ ' + esc(adds.map(function(a){ return lab(OTHER_BY_ID[a]); }).join(', ')) : '') + '</span></div>' +
+    '<div class="h-foot"><span class="price">' + kr(o.total) + '</span><button type="button" class="btn" data-reorder="' + esc(o.ts) + '">↻ ' + t('reorder') + '</button></div></div>';
+}
+function catOf(id){ for (var i = 0; i < OTHER.length; i++) for (var j = 0; j < OTHER[i].items.length; j++) if (OTHER[i].items[j].id === id) return OTHER[i].cat; return null; }
+function reorder(ts){
+  var o = myOrders.filter(function(x){ return String(x.ts) === String(ts); })[0]; if (!o) return;
+  o.lines.forEach(function(l){
+    if (BURGERS[l.id]) {
+      var adds = (l.adds || []).filter(function(a){ return OTHER_BY_ID[a]; });
+      putLine({ id: l.id, unit: unitPrice(l.id, toSet(l.ex)), qty: l.q, rm: (l.rm || []).filter(function(x){ return ING[x]; }), ex: (l.ex || []).filter(function(x){ return EXTRA[x]; }),
+        sides: adds.filter(function(a){ return catOf(a) === 'sides'; }), dips: adds.filter(function(a){ return catOf(a) === 'dips'; }),
+        drink: adds.filter(function(a){ return catOf(a) === 'drinks'; })[0] || null }, null);
+    } else if (OTHER_BY_ID[l.id]) putLine({ id: l.id, unit: OTHER_BY_ID[l.id].price, qty: l.q }, null);
+  });
+  var cb = $('#cartBtn'); cb.classList.remove('pop'); void cb.offsetWidth; cb.classList.add('pop');
+  state.view = 'cart'; renderSheet(true); toast(t('added'));
 }
 
 /* ---------- Sign-in ---------- */
@@ -1090,14 +1202,16 @@ function renderSheet(focus){
   var body = $('#sheetBody'), title = '', html = '', back = null, foot = '';
   if (state.view === 'cart') {
     title = t('cartTitle');
-    if (!state.cart.length) html = '<div class="empty">' + icon('burger') + '<h3>' + t('emptyTitle') + '</h3><p class="muted">' + t('emptyText') + '</p><button type="button" class="cta" data-act="toMenu">' + t('emptyCta') + '</button></div>';
+    var act = activeOrders(), actHtml = act.map(activeCard).join('');
+    if (!state.cart.length && act.length) html = actHtml + '<button type="button" class="cta wide" data-act="toMenu">' + t('orderMore') + '</button>';
+    else if (!state.cart.length) html = '<div class="empty">' + icon('burger') + '<h3>' + t('emptyTitle') + '</h3><p class="muted">' + t('emptyText') + '</p><button type="button" class="cta" data-act="toMenu">' + t('emptyCta') + '</button></div>';
     else {
       var cw = orderWindow(), flash = state.flash; state.flash = null;
       var ids = [], nB = 0;
       state.cart.forEach(function(l){ if (BURGERS[l.id]) { nB += l.qty; if (ids.indexOf(l.id) < 0) ids.push(l.id); } });
       ids = ids.slice(0, 3);
       var sub = cw.ok ? '<span class="ch-sub"><i></i>' + t('readyAbout') + ' ' + hhmm(cw.slots[0]) + '</span>' : '<span class="ch-sub closed"><i></i>' + esc(statusText(cw)) + '</span>';
-      html = '<div class="cart-hero">' + (ids.length ? '<div class="stack s' + ids.length + '">' + ids.map(function(id, k){ return '<img src="img/t-' + id + '.jpg" alt="" style="--k:' + k + '">'; }).join('') + '</div>' : '') +
+      html = (act.length ? actHtml + '<div class="ao-sep">' + t('cartTitle') + '</div>' : '') + '<div class="cart-hero">' + (ids.length ? '<div class="stack s' + ids.length + '">' + ids.map(function(id, k){ return '<img src="img/t-' + id + '.jpg" alt="" style="--k:' + k + '">'; }).join('') + '</div>' : '') +
         '<div class="ch-text"><span class="eyebrow">' + t('yourOrder') + '</span><b>' + (nB ? nB + ' ' + (nB === 1 ? t('burger1') : t('burgerN')) : cartCount() + ' ' + (cartCount() === 1 ? t('item1') : t('itemN'))) + '</b>' + sub + '</div></div>' +
         '<div class="cart-lines">' + state.cart.map(function(l, i){
           var note = lineNote(l), adds = addsOf(l);
@@ -1169,8 +1283,15 @@ function renderSheet(focus){
       '<button type="button" class="cta wide" data-act="close">' + t('newOrder') + '</button>';
   } else if (state.view === 'account') {
     title = t('accountTitle');
-    html = '<p>' + t('signedInAs') + ' <b>' + esc(state.user.name) + '</b> ' + t('via') + ' ' + viaLabel(state.user.via) + '.</p>' +
+    var hist = historyOrders(), act2 = activeOrders();
+    html = '<div class="acct-card"><div class="avatar">' + esc(state.user.name.charAt(0).toUpperCase()) + '</div><div><b>' + esc(state.user.name) + '</b><small>' + t('via') + ' ' + viaLabel(state.user.via) + '</small></div></div>' +
+      act2.map(activeCard).join('') +
+      '<button type="button" class="menu-item" data-act="history">' + icon('history') + '<span>' + t('history') + '</span><em>' + hist.length + '</em><span class="chev" aria-hidden="true">›</span></button>' +
       '<button type="button" class="provider" data-act="signout">' + t('signOut') + '</button>';
+  } else if (state.view === 'history') {
+    title = t('history'); back = 'account';
+    var hl = historyOrders();
+    html = hl.length ? hl.map(historyCard).join('') : '<div class="empty">' + icon('burger') + '<p class="muted">' + t('noHistory') + '</p><button type="button" class="cta" data-act="toMenu">' + t('emptyCta') + '</button></div>';
   }
   var keepY = state.view === lastView ? body.scrollTop : 0;
   $('#sheetTitle').textContent = title; body.innerHTML = html; body.scrollTop = keepY;
@@ -1248,6 +1369,7 @@ $('#sheet').addEventListener('click', function(e){
     cl.qty = Math.min(20, nq); saveCart(); state.flash = idx; renderSheet(false); return;
   }
   if (el.dataset.edit) { editLine(Number(el.dataset.edit)); return; }
+  if (el.dataset.reorder) { reorder(el.dataset.reorder); return; }
   var act = el.dataset.act; if (!act) return;
   if (act === 'checkout') { if (!orderWindow().ok) { renderSheet(false); return; } state.afterSignIn = 'pickup'; state.view = state.user ? 'pickup' : 'signin'; renderSheet(true); }
   else if (act === 'google' || act === 'facebook') signInWithProvider(act);
@@ -1266,10 +1388,12 @@ $('#sheet').addEventListener('click', function(e){
     payTimer = setTimeout(function(){
       if (state.view !== 'paying' || !sheetOpen) return;
       order.ts = Date.now(); orders.push(order); saveOrders();
+      myOrders.push(JSON.parse(JSON.stringify(Object.assign({ user: userKey(state.user) }, order)))); saveMy();
       state.order = order; state.cart = []; saveCart(); state.view = 'done'; renderSheet(true);
     }, 1600);
   }
   else if (act === 'close') closeSheet();
+  else if (act === 'history') { state.view = 'history'; renderSheet(true); }
   else if (act === 'toMenu') { closeSheet(); setTimeout(function(){ $('#menu').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' }); }, reduceMotion ? 0 : 440); }
   else if (act === 'saveBurger' && d) {
     var editing = d.edit != null;
@@ -1502,6 +1626,7 @@ route();
 preloadPhotos();
 startSteam();
 setInterval(renderStatus, 60000);
+setInterval(function(){ renderCartBits(); if (sheetOpen && ['cart', 'account', 'history'].indexOf(state.view) >= 0 && activeOrders().length) renderSheet(false); }, 30000);
 })();
 </script>
 </body>
